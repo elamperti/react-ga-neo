@@ -1,35 +1,25 @@
-# ✨ Looking for sponsors! ✨
+# React GA Neo
 
-Maintainer need help with sponsor!
-
-<table>
-  <tbody>
-    <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/sponsors/codler"><img src="https://avatars.githubusercontent.com/u/102052?v=4&s=100" width="100px;" alt="Han Lin Yap"/><br /><sub><b>Han Lin Yap</b></sub></a><br /><a href="#maintenance-jakebolam" title="Maintenance">🚧</a></td>
-    </tr>
-  </tbody>
-</table>
-
-# React Google Analytics 4
+A fork of `react-ga4` with a few more features sprinkled on top.
 
 ## Migrate from old react-ga
 
 ```js
-// Simply replace `react-ga` with `react-ga4` and remove `ReactGA.pageview()`
+// Simply replace `react-ga` with `react-ga-neo` and remove `ReactGA.pageview()`
 // import ReactGA from "react-ga";
-import ReactGA from "react-ga4";
+import ReactGA from "react-ga-neo";
 ```
 
 ## Install
 
 ```bash
-npm i react-ga4
+npm i react-ga-neo
 ```
 
 ## Usage
 
 ```js
-import ReactGA from "react-ga4";
+import ReactGA from "react-ga-neo";
 
 ReactGA.initialize("your GA measurement id");
 ```
@@ -118,7 +108,7 @@ This method signature are NOT for `UA-XXX`
 ### Extending
 
 ```js
-import { ReactGAImplementation } from "react-ga4";
+import { ReactGAImplementation } from "react-ga-neo";
 
 class MyCustomOverriddenClass extends ReactGAImplementation {}
 
@@ -129,9 +119,6 @@ export default new MyCustomOverriddenClass();
 
 Use [Google Analytics Debugger Chrome Extension](https://chrome.google.com/webstore/detail/google-analytics-debugger/jnkmfdileelhofjcijamephohjechhna?hl=en) to see logs
 
-## Maintainer
-
-[Han Lin Yap](https://github.com/codler)
 
 ## License
 

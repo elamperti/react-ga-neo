@@ -1,6 +1,6 @@
 {
-  "name": "react-ga4",
-  "version": "2.1.0",
+  "name": "react-ga-neo",
+  "version": "2.2.0",
   "description": "React Google Analytics 4",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -10,7 +10,7 @@
     "prepublishOnly": "npm run build && npm test",
     "test": "NODE_ENV=test jest"
   },
-  "author": "Han Lin Yap (https://yap.nu)",
+  "author": "Enrico Lamperti",
   "license": "MIT",
   "keywords": [
     "GA",
@@ -21,7 +21,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codler/react-ga4.git"
+    "url": "git+https://github.com/elamperti/react-ga-neo.git"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
