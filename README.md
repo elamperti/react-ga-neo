@@ -1,19 +1,26 @@
-# React GA Neo
+# React GA Neo [![npm version](https://badge.fury.io/js/react-ga-neo.svg)](https://www.npmjs.com/package/react-ga-neo)
 
 A fork of `react-ga4` with a few more features sprinkled on top.
 
-## Migrate from old react-ga
+<!-- TOC depthFrom:2 depthTo:3 -->
 
-```js
-// Simply replace `react-ga` with `react-ga-neo` and remove `ReactGA.pageview()`
-// import ReactGA from "react-ga";
-import ReactGA from "react-ga-neo";
-```
+- [Install](#install)
+- [Usage](#usage)
+  - [Migrating from old react-ga](#migrating-from-old-react-ga)
+- [Example](#example)
+- [Reference](#reference)
+  - [Extending](#extending)
+- [Debugging](#debugging)
+- [License](#license)
+
+<!-- /TOC -->
 
 ## Install
 
-```bash
-npm i react-ga-neo
+This package is available at npm as [`react-ga-neo`](https://www.npmjs.com/package/react-ga-neo).
+
+```sh
+npm install react-ga-neo
 ```
 
 ## Usage
@@ -21,12 +28,23 @@ npm i react-ga-neo
 ```js
 import ReactGA from "react-ga-neo";
 
-ReactGA.initialize("your GA measurement id");
+ReactGA.initialize("G-XXXXXXXXXX"); // Your GA4 measurement id
 ```
+
+### Migrating from old react-ga
+
+Simply replace `react-ga` with `react-ga-neo` and remove `ReactGA.pageview()` calls.
+
+```js
+// import ReactGA from "react-ga";
+import ReactGA from "react-ga-neo";
+```
+
+A few old methods may not be available. You may use `ReactGA.gtag()` or `React.ga()` as last resort to call `gtag`/`ga` directly. Alternatively, you can [extend the library](#extending). Pull requests with improvements are welcome! :)
 
 ## Example
 
-More example can be found in [test suite](src/ga4.test.js)
+Check out [the tests](src/ga4.test.js) for more examples.
 
 ```js
 // Multiple products (previously known as trackers)
@@ -57,13 +75,14 @@ ReactGA.event({
 
 ## Reference
 
-#### ReactGA.initialize(GA_MEASUREMENT_ID, options)
+#### ReactGA.initialize(GA_MEASUREMENT_ID, \[options\])
 
 | Parameter           | Notes                                                                                                                   |
 | ------------------- | ----------------------------------------------------------------------------------------------------------------------- |
 | GA_MEASUREMENT_ID   | `string` Required                                                                                                       |
 | options.nonce       | `string` Optional Used for Content Security Policy (CSP) [more](https://developers.google.com/tag-manager/web/csp)      |
 | options.testMode    | `boolean` Default false                                                                                                 |
+| options.titleCase   | `boolean` Default true                                                                                                  |
 | options.gtagUrl     | `string` Default `https://www.googletagmanager.com/gtag/js`                                                             |
 | options.gaOptions   | `object` Optional [Reference](https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference) |
 | options.gtagOptions | `object` Optional                                                                                                       |
@@ -76,7 +95,7 @@ ReactGA.event({
 
 #### ReactGA.event(name, params)
 
-This method signature are NOT for `UA-XXX`
+This method signature is NOT for `UA-XXX`
 
 | Parameter | Notes                                                                                                                         |
 | --------- | ----------------------------------------------------------------------------------------------------------------------------- |
@@ -101,9 +120,13 @@ This method signature are NOT for `UA-XXX`
 | ------------ | ----------------- |
 | fieldsObject | `object` Required |
 
-#### ReactGA&#46;gtag(...args)
+#### ReactGA.gtag(...args)
 
-#### ReactGA&#46;ga(...args)
+Used to call `gtag()` directly (see [official documentation](https://developers.google.com/tag-platform/gtagjs/reference) for details).
+
+#### ReactGA.ga(...args)
+
+DEPRECATED.
 
 ### Extending
 
@@ -114,11 +137,6 @@ class MyCustomOverriddenClass extends ReactGAImplementation {}
 
 export default new MyCustomOverriddenClass();
 ```
-
-## Debugging
-
-Use [Google Analytics Debugger Chrome Extension](https://chrome.google.com/webstore/detail/google-analytics-debugger/jnkmfdileelhofjcijamephohjechhna?hl=en) to see logs
-
 
 ## License
 
