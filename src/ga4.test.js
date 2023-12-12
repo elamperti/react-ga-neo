@@ -14,8 +14,8 @@ describe("GA4", () => {
     GA4.reset();
   });
 
-  describe("GA4.initialize()", () => {
-    it("initialize() default", () => {
+  describe("Initialization", () => {
+    it("Default", () => {
       // When
       GA4.initialize(GA_MEASUREMENT_ID);
 
@@ -25,7 +25,7 @@ describe("GA4", () => {
       expect(gtag).toHaveBeenCalledTimes(2);
     });
 
-    it("initialize() with options", () => {
+    it("With options", () => {
       // Given
       const options = {
         gaOptions: {
@@ -44,7 +44,7 @@ describe("GA4", () => {
       expect(gtag).toHaveBeenCalledTimes(2);
     });
 
-    it("initialize() in test mode", () => {
+    it("Test mode", () => {
       // Given
       const options = {
         testMode: true,
@@ -60,7 +60,7 @@ describe("GA4", () => {
       expect(gtag).toHaveBeenCalledTimes(0);
     });
 
-    it("initialize() with default titleCase true", () => {
+    it("Capitalization of event names (enabled)", () => {
       // Given
       const options = {};
 
@@ -81,7 +81,7 @@ describe("GA4", () => {
       });
     });
 
-    it("initialize() with titleCase false", () => {
+    it("Capitalization of event names (disabled)", () => {
       // Given
       const options = {
         titleCase: false,
@@ -104,7 +104,7 @@ describe("GA4", () => {
       });
     });
 
-    it("initialize() multiple products", () => {
+    it("With multiple measurement IDs", () => {
       // Given
       const GA_MEASUREMENT_ID2 = "GA_MEASUREMENT_ID2";
       const config = [
@@ -123,8 +123,8 @@ describe("GA4", () => {
     });
   });
 
-  describe("GA4.ga()", () => {
-    it("ga() send pageview", () => {
+  describe("Legacy ga() support", () => {
+    it("sends pageviews", () => {
       // Given
       const command = "send";
       const object = { hitType: "pageview" };
@@ -136,7 +136,7 @@ describe("GA4", () => {
       expect(gtag).toHaveBeenNthCalledWith(1, "event", "page_view");
     });
 
-    it("ga() send timing", () => {
+    it("sends timing", () => {
       // Given
       const command = "send";
       const hitType = "timing";
@@ -155,7 +155,7 @@ describe("GA4", () => {
       });
     });
 
-    it("ga() callback", (done) => {
+    it("invokes callback", (done) => {
       // Given
       const clientId = "clientId value";
       gtag.mockImplementationOnce((command, target, field_name, cb) =>
@@ -185,7 +185,7 @@ describe("GA4", () => {
       );
     });
 
-    it("ga() async callback", (done) => {
+    it("supports async callback", (done) => {
       // Given
       const clientId = "clientId value";
       gtag.mockImplementationOnce((command, target, field_name, cb) =>
@@ -211,7 +211,7 @@ describe("GA4", () => {
       );
     });
 
-    it("ga() callback queue", (done) => {
+    it("handles queueing correctly", (done) => {
       // Given
       const clientId = "clientId value";
       gtag.mockImplementationOnce((command, target, field_name, cb) => {
@@ -250,8 +250,8 @@ describe("GA4", () => {
     });
   });
 
-  describe("GA4.send()", () => {
-    it("send() pageview", () => {
+  describe("Send method", () => {
+    it("sends pageviews", () => {
       // Given
       const object = { hitType: "pageview" };
 
@@ -263,10 +263,10 @@ describe("GA4", () => {
     });
   });
 
-  describe("GA4.event()", () => {
-    it("event() custom events", () => {
+  describe("Event method", () => {
+    it("Custom events", () => {
       // Given
-      const eventName = "screen_view";
+      const eventName = "screenview";
       const eventParams = {
         app_name: "myAppName",
         screen_name: "Home",
@@ -279,7 +279,7 @@ describe("GA4", () => {
       expect(gtag).toHaveBeenNthCalledWith(1, "event", eventName, eventParams);
     });
 
-    it("event() simple", () => {
+    it("Simple events", () => {
       // Given
       const object = {
         category: "category value",
@@ -300,8 +300,8 @@ describe("GA4", () => {
     });
   });
 
-  describe("GA4.set()", () => {
-    it("set()", () => {
+  describe("Set method", () => {
+    it("sends parameters correctly", () => {
       // Given
       const object = {
         anonymizeIp: true,
@@ -324,7 +324,7 @@ describe("GA4", () => {
       });
     });
 
-    it("set() with additional params", () => {
+    it("takes additional params", () => {
       // Given
       const object = ['user_properties', {
         favorite_composer: 'Mahler',
