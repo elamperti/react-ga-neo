@@ -1,7 +1,7 @@
 {
   "name": "react-ga-neo",
   "version": "2.2.0",
-  "description": "React Google Analytics 4",
+  "description": "Google Analytics 4 in React",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "scripts": {

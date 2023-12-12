@@ -1,4 +1,5 @@
-# React GA Neo [![npm version](https://badge.fury.io/js/react-ga-neo.svg)](https://www.npmjs.com/package/react-ga-neo)
+# React GA Neo [![GitHub Actions](https://github.com/elamperti/react-ga-neo/actions/workflows/publish.yml/badge.svg)](https://github.com/elamperti/react-ga-neo/actions) [![npm version](https://badge.fury.io/js/react-ga-neo.svg)](https://www.npmjs.com/package/react-ga-neo)
+<!-- [![npm downloads](https://img.shields.io/npm/dm/react-ga-neo.svg)](https://www.npmjs.com/package/react-ga-neo) -->
 
 A fork of `react-ga4` with a few more features sprinkled on top.
 
@@ -10,7 +11,6 @@ A fork of `react-ga4` with a few more features sprinkled on top.
 - [Example](#example)
 - [Reference](#reference)
   - [Extending](#extending)
-- [Debugging](#debugging)
 - [License](#license)
 
 <!-- /TOC -->
