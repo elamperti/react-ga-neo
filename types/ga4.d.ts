@@ -52,6 +52,7 @@ export class GA4 {
      * @param {Object} [options]
      * @param {string} [options.nonce]
      * @param {boolean} [options.testMode=false]
+     * @param {boolean} [options.titleCase=true]
      * @param {string} [options.gtagUrl=https://www.googletagmanager.com/gtag/js]
      * @param {GaOptions|any} [options.gaOptions]
      * @param {Object} [options.gtagOptions] New parameter
@@ -59,15 +60,23 @@ export class GA4 {
     initialize: (GA_MEASUREMENT_ID: InitOptions[] | string, options?: {
         nonce?: string;
         testMode?: boolean;
+        titleCase?: boolean;
         gtagUrl?: string;
         gaOptions?: GaOptions | any;
         gtagOptions?: any;
     }) => void;
     _currentMeasurementId: string;
-    set: (fieldsObject: any) => void;
+    _titleCase: boolean;
+    set: (fieldsObject: any, args?: any) => void;
     _gaCommandSendEvent: (eventCategory: any, eventAction: any, eventLabel: any, eventValue: any, fieldsObject: any) => void;
     _gaCommandSendEventParameters: (...args: any[]) => void;
-    _gaCommandSendTiming: (category: string, variable: string, value: number, label?: string) => void;
+    /**
+     * @param {string} timingCategory
+     * @param {string} timingVar
+     * @param {number} timingValue
+     * @param {string} timingLabel
+     */
+    _gaCommandSendTiming: (timingCategory: string, timingVar: string, timingValue: number, timingLabel: string) => void;
     _gaCommandSendPageview: (page: any, fieldsObject: any) => void;
     _gaCommandSendPageviewParameters: (...args: any[]) => void;
     _gaCommandSend: (...args: any[]) => void;
@@ -79,12 +88,27 @@ export class GA4 {
      * @param {Object} [params]
      */
     event: (optionsOrName: UaEventOptions | string, params?: any) => void;
+    /**
+     * @param {Object} fieldObject
+     */
     send: (fieldObject: any) => void;
-    exception: (details: {
+    /**
+     * @param {Object} [details]
+     * @param {string} [details.description]
+     * @param {boolean} [details.fatal]
+     */
+    exception: (details?: {
         description?: string;
         fatal?: boolean;
     }) => void;
-    timing: (timingObject: {
+    /**
+     * @param {Object} timingObject
+     * @param {string} timingObject.category
+     * @param {string} timingObject.variable
+     * @param {number} timingObject.value
+     * @param {string} [timingObject.label]
+     */
+    timing: ({ category, variable, value, label }: {
         category: string;
         variable: string;
         value: number;

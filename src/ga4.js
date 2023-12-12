@@ -157,6 +157,7 @@ export class GA4 {
    * @param {Object} [options]
    * @param {string} [options.nonce]
    * @param {boolean} [options.testMode=false]
+   * @param {boolean} [options.titleCase=true]
    * @param {string} [options.gtagUrl=https://www.googletagmanager.com/gtag/js]
    * @param {GaOptions|any} [options.gaOptions]
    * @param {Object} [options.gtagOptions] New parameter
@@ -277,6 +278,12 @@ export class GA4 {
     }
   };
 
+  /**
+   * @param {string} timingCategory
+   * @param {string} timingVar
+   * @param {number} timingValue
+   * @param {string} timingLabel
+   */
   _gaCommandSendTiming = (
     timingCategory,
     timingVar,
@@ -478,14 +485,29 @@ export class GA4 {
     }
   };
 
+  /**
+   * @param {Object} fieldObject
+   */
   send = (fieldObject) => {
     this._gaCommand("send", fieldObject);
   };
 
+  /**
+   * @param {Object} [details]
+   * @param {string} [details.description]
+   * @param {boolean} [details.fatal]
+   */
   exception = (details = {}) => {
     this._gtag("event", 'exception', details);
   };
 
+  /**
+   * @param {Object} timingObject
+   * @param {string} timingObject.category
+   * @param {string} timingObject.variable
+   * @param {number} timingObject.value
+   * @param {string} [timingObject.label]
+   */
   timing = ({category, variable, value, label}) => {
     this._gaCommandSendTiming(category, variable, value, label);
   }
