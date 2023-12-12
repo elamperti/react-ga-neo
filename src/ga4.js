@@ -78,11 +78,7 @@ export class GA4 {
     this._gtag(...args);
   }
 
-  _loadGA = (
-    GA_MEASUREMENT_ID,
-    nonce,
-    gtagUrl = "https://www.googletagmanager.com/gtag/js"
-  ) => {
+  _loadGA = (GA_MEASUREMENT_ID, nonce, gtagUrl = "https://www.googletagmanager.com/gtag/js") => {
     if (typeof window === "undefined" || typeof document === "undefined") {
       return;
     }
@@ -135,18 +131,15 @@ export class GA4 {
       hitCallback: "event_callback",
     };
 
-    const gtagOptions = Object.entries(gaOptions).reduce(
-      (prev, [key, value]) => {
-        if (mapFields[key]) {
-          prev[mapFields[key]] = value;
-        } else {
-          prev[key] = value;
-        }
+    const gtagOptions = Object.entries(gaOptions).reduce((prev, [key, value]) => {
+      if (mapFields[key]) {
+        prev[mapFields[key]] = value;
+      } else {
+        prev[key] = value;
+      }
 
-        return prev;
-      },
-      {}
-    );
+      return prev;
+    }, {});
 
     return gtagOptions;
   };
@@ -164,23 +157,13 @@ export class GA4 {
    */
   initialize = (GA_MEASUREMENT_ID, options = {}) => {
     if (!GA_MEASUREMENT_ID) {
-      throw new Error("Require GA_MEASUREMENT_ID");
+      throw new Error("GA_MEASUREMENT_ID required");
     }
 
-    const initConfigs =
-      typeof GA_MEASUREMENT_ID === "string"
-        ? [{ trackingId: GA_MEASUREMENT_ID }]
-        : GA_MEASUREMENT_ID;
+    const initConfigs = typeof GA_MEASUREMENT_ID === "string" ? [{ trackingId: GA_MEASUREMENT_ID }] : GA_MEASUREMENT_ID;
 
     this._currentMeasurementId = initConfigs[0].trackingId;
-    const {
-      gaOptions,
-      gtagOptions,
-      nonce,
-      testMode = false,
-      titleCase = true,
-      gtagUrl,
-    } = options;
+    const { gaOptions, gtagOptions, nonce, testMode = false, titleCase = true, gtagUrl } = options;
     this._testMode = testMode;
     this._titleCase = titleCase;
 
@@ -239,13 +222,7 @@ export class GA4 {
     this._gaCommand("set", fieldsObject, args);
   };
 
-  _gaCommandSendEvent = (
-    eventCategory,
-    eventAction,
-    eventLabel,
-    eventValue,
-    fieldsObject
-  ) => {
+  _gaCommandSendEvent = (eventCategory, eventAction, eventLabel, eventValue, fieldsObject) => {
     this._gtag("event", eventAction, {
       event_category: eventCategory,
       event_label: eventLabel,
@@ -268,13 +245,7 @@ export class GA4 {
         hitType,
         ...rest
       } = args[0];
-      this._gaCommandSendEvent(
-        eventCategory,
-        eventAction,
-        eventLabel,
-        eventValue,
-        rest
-      );
+      this._gaCommandSendEvent(eventCategory, eventAction, eventLabel, eventValue, rest);
     }
   };
 
@@ -284,12 +255,7 @@ export class GA4 {
    * @param {number} timingValue
    * @param {string} timingLabel
    */
-  _gaCommandSendTiming = (
-    timingCategory,
-    timingVar,
-    timingValue,
-    timingLabel
-  ) => {
+  _gaCommandSendTiming = (timingCategory, timingVar, timingValue, timingLabel) => {
     this._gtag("event", "timing_complete", {
       event_category: timingCategory,
       name: timingVar,
@@ -343,7 +309,7 @@ export class GA4 {
         break;
       case "timing":
         if (isObject) {
-          const { timingValue, timingCategory,timingVar, timingLabel } = args[0];
+          const { timingValue, timingCategory, timingVar, timingLabel } = args[0];
           this._gaCommandSendTiming(timingCategory, timingVar, timingValue, timingLabel);
         } else {
           this._gaCommandSendTiming(...args.slice(1));
@@ -367,12 +333,12 @@ export class GA4 {
   _gaCommandSet = (...args) => {
     const newArgs = [];
 
-    if (typeof args[0] === 'string' && typeof args[1] === 'object') {
-      newArgs.push(args[0], args[1])
+    if (typeof args[0] === "string" && typeof args[1] === "object") {
+      newArgs.push(args[0], args[1]);
     } else if (typeof args[0] === "string") {
-      newArgs.push(this._toGtagOptions({ [args[0]]: args[1] }))
+      newArgs.push(this._toGtagOptions({ [args[0]]: args[1] }));
     } else {
-      newArgs.push(this._toGtagOptions(args[0]))
+      newArgs.push(this._toGtagOptions(args[0]));
     }
 
     this._gtag("set", ...newArgs);
@@ -431,8 +397,7 @@ export class GA4 {
     if (typeof optionsOrName === "string") {
       this._gtag("event", optionsOrName, this._toGtagOptions(params));
     } else {
-      const { action, category, label, value, nonInteraction, transport } =
-        optionsOrName;
+      const { action, category, label, value, nonInteraction, transport } = optionsOrName;
       if (!category || !action) {
         console.warn("args.category AND args.action are required in event()");
 
@@ -472,9 +437,7 @@ export class GA4 {
           console.warn("`args.transport` must be a string.");
         } else {
           if (["beacon", "xhr", "image"].indexOf(transport) === -1) {
-            console.warn(
-              "`args.transport` must be either one of these values: `beacon`, `xhr` or `image`"
-            );
+            console.warn("`args.transport` must be either one of these values: `beacon`, `xhr` or `image`");
           }
 
           fieldObject.transport = transport;
@@ -498,7 +461,7 @@ export class GA4 {
    * @param {boolean} [details.fatal]
    */
   exception = (details = {}) => {
-    this._gtag("event", 'exception', details);
+    this._gtag("event", "exception", details);
   };
 
   /**
@@ -508,9 +471,9 @@ export class GA4 {
    * @param {number} timingObject.value
    * @param {string} [timingObject.label]
    */
-  timing = ({category, variable, value, label}) => {
+  timing = ({ category, variable, value, label }) => {
     this._gaCommandSendTiming(category, variable, value, label);
-  }
+  };
 }
 
 export default new GA4();
