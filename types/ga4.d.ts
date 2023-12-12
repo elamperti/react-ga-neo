@@ -67,7 +67,7 @@ export class GA4 {
     set: (fieldsObject: any) => void;
     _gaCommandSendEvent: (eventCategory: any, eventAction: any, eventLabel: any, eventValue: any, fieldsObject: any) => void;
     _gaCommandSendEventParameters: (...args: any[]) => void;
-    _gaCommandSendTiming: (timingCategory: any, timingVar: any, timingValue: any, timingLabel: any) => void;
+    _gaCommandSendTiming: (category: string, variable: string, value: number, label?: string) => void;
     _gaCommandSendPageview: (page: any, fieldsObject: any) => void;
     _gaCommandSendPageviewParameters: (...args: any[]) => void;
     _gaCommandSend: (...args: any[]) => void;
@@ -83,6 +83,12 @@ export class GA4 {
     exception: (details: {
         description?: string;
         fatal?: boolean;
+    }) => void;
+    timing: (timingObject: {
+        category: string;
+        variable: string;
+        value: number;
+        label?: string;
     }) => void;
 }
 declare const _default: GA4;

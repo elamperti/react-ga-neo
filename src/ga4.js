@@ -284,9 +284,9 @@ export class GA4 {
     timingLabel
   ) => {
     this._gtag("event", "timing_complete", {
+      event_category: timingCategory,
       name: timingVar,
       value: timingValue,
-      event_category: timingCategory,
       event_label: timingLabel,
     });
   };
@@ -324,7 +324,8 @@ export class GA4 {
 
   // https://developers.google.com/analytics/devguides/collection/analyticsjs/command-queue-reference#send
   _gaCommandSend = (...args) => {
-    const hitType = typeof args[0] === "string" ? args[0] : args[0].hitType;
+    const isObject = typeof args[0] === "object";
+    const hitType = isObject ? args[0].hitType : args[0];
 
     switch (hitType) {
       case "event":
@@ -334,7 +335,12 @@ export class GA4 {
         this._gaCommandSendPageviewParameters(...args);
         break;
       case "timing":
-        this._gaCommandSendTiming(...args.slice(1));
+        if (isObject) {
+          const { timingValue, timingCategory,timingVar, timingLabel } = args[0];
+          this._gaCommandSendTiming(timingCategory, timingVar, timingValue, timingLabel);
+        } else {
+          this._gaCommandSendTiming(...args.slice(1));
+        }
         break;
       case "screenview":
       case "transaction":
@@ -479,6 +485,10 @@ export class GA4 {
   exception = (details = {}) => {
     this._gtag("event", 'exception', details);
   };
+
+  timing = ({category, variable, value, label}) => {
+    this._gaCommandSendTiming(category, variable, value, label);
+  }
 }
 
 export default new GA4();

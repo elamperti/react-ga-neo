@@ -127,6 +127,15 @@ This method signature is NOT for `UA-XXX`
 | details.description | `string`          |
 | details.fatal       | `string`          |
 
+#### ReactGA.timing(timingObject)
+
+| Parameter             | Notes             |
+| --------------------- | ----------------- |
+| timingObject.category | `string` Required |
+| timingObject.variable | `string` Required |
+| timingObject.value    | `number` Required |
+| timingObject.label    | `string` Optional |
+
 #### ReactGA.gtag(...args)
 
 Used to call `gtag()` directly (see [official documentation](https://developers.google.com/tag-platform/gtagjs/reference) for details).

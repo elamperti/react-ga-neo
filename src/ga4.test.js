@@ -155,6 +155,27 @@ describe("GA4", () => {
       });
     });
 
+    it("sends timing as an object", () => {
+      const timingCategory = "JS Dependencies";
+      const timingVar = "load";
+      const timingValue = 3549;
+
+      // Scrambled order is intentional
+      GA4.ga('send', {
+        hitType: 'timing',
+        timingValue,
+        timingCategory,
+        timingVar,
+        // timingLabel was omitted on purpose
+      });
+
+      expect(gtag).toHaveBeenNthCalledWith(1, "event", "timing_complete", {
+        event_category: timingCategory,
+        name: timingVar,
+        value: timingValue,
+      });
+    });
+
     it("supports exceptions", () => {
       // Given
       const exDescription = "exDescription value";
@@ -388,6 +409,24 @@ describe("GA4", () => {
       expect(gtag).toHaveBeenNthCalledWith(1, "event", "exception", {
         description: 'Descriptive error message',
         fatal: false,
+      });
+    });
+  });
+
+  describe("Timing method", () => {
+    it("sends parameters correctly", () => {
+      GA4.timing({
+        category: "category value",
+        variable: "variable value",
+        value: 123,
+        label: "label value",
+      });
+
+      expect(gtag).toHaveBeenNthCalledWith(1, "event", "timing_complete", {
+        event_category: "category value",
+        name: "variable value",
+        value: 123,
+        event_label: "label value",
       });
     });
   });
