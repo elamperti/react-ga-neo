@@ -341,7 +341,10 @@ export class GA4 {
       case "item":
       case "social":
       case "exception":
-        console.warn(`Unsupported send command: ${hitType}`);
+        this.exception({
+          description: args[1],
+          fatal: args[2],
+        });
         break;
       default:
         console.warn(`Send command doesn't exist: ${hitType}`);
@@ -471,6 +474,10 @@ export class GA4 {
 
   send = (fieldObject) => {
     this._gaCommand("send", fieldObject);
+  };
+
+  exception = (details = {}) => {
+    this._gtag("event", 'exception', details);
   };
 }
 

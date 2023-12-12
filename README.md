@@ -120,6 +120,13 @@ This method signature is NOT for `UA-XXX`
 | ------------ | ----------------- |
 | fieldsObject | `object` Required |
 
+#### ReactGA.exception(\[details\])
+
+| Parameter           | Notes             |
+| ------------------- | ----------------- |
+| details.description | `string`          |
+| details.fatal       | `string`          |
+
 #### ReactGA.gtag(...args)
 
 Used to call `gtag()` directly (see [official documentation](https://developers.google.com/tag-platform/gtagjs/reference) for details).

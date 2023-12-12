@@ -155,6 +155,27 @@ describe("GA4", () => {
       });
     });
 
+    it("supports exceptions", () => {
+      // Given
+      const exDescription = "exDescription value";
+      const exFatal = true;
+
+      // When
+      GA4.ga('send', 'exception', exDescription, exFatal);
+
+      // Then
+      expect(gtag).toHaveBeenNthCalledWith(1, "event", "exception", {
+        description: exDescription,
+        fatal: exFatal,
+      });
+    });
+
+    it("supports empty exceptions", () => {
+      GA4.ga('send', 'exception');
+
+      expect(gtag).toHaveBeenNthCalledWith(1, "event", "exception", {});
+    });
+
     it("invokes callback", (done) => {
       // Given
       const clientId = "clientId value";
@@ -340,6 +361,33 @@ describe("GA4", () => {
         favorite_composer: 'Mahler',
         favorite_instrument: 'double bass',
         season_ticketholder: 'true'
+      });
+    });
+  });
+
+  describe("Exception method", () => {
+    it("sends parameters correctly", () => {
+      // When
+      GA4.exception();
+
+      // Then
+      expect(gtag).toHaveBeenNthCalledWith(1, "event", "exception", {});
+    });
+
+    it("takes details", () => {
+      // Given
+      const exceptionDetails = {
+        description: 'Descriptive error message',
+        fatal: false,
+      };
+
+      // When
+      GA4.exception(exceptionDetails);
+
+      // Then
+      expect(gtag).toHaveBeenNthCalledWith(1, "event", "exception", {
+        description: 'Descriptive error message',
+        fatal: false,
       });
     });
   });

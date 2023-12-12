@@ -80,6 +80,10 @@ export class GA4 {
      */
     event: (optionsOrName: UaEventOptions | string, params?: any) => void;
     send: (fieldObject: any) => void;
+    exception: (details: {
+        description?: string;
+        fatal?: boolean;
+    }) => void;
 }
 declare const _default: GA4;
 export default _default;
